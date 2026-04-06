@@ -1,43 +1,109 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import DashboardHome from "./dashboard";
-import Stock from "./stock";
+import StockIn from "./stockIn";
+import StockOut from "./stockOut";
 import Reports from "./report";
 import Products from "./product";
-import Categories from "./categories";
-export default function Admin() {
-    const user=JSON.parse(localStorage.getItem("user"))
-    if (!user) {
-        return <h2>first login</h2>
-    }
-    const [active, setActive]=useState("")
-    return(
-        <div className="flex">
+import Sales from "./sales";
+// import Categories from "./categories"; // Uncomment if you have this
 
-            <div className="w-64 h-screen bg-gray-800 text-white p-4">
-                <div className="bg-white rounded p-2 "><h2 className="font-bold text-xl text-blue-800 rounded">Nick Spares</h2></div>
-                <ul className="space-y-3">
-                    <li className={`p-2 rounded cursor-pointer ${
-                        active==="dashboard"? "bg-gray-500":"hover:bg-blue-800"
-                     }`} onClick={()=>setActive("dashboard")}>Dashboard</li>
-                    <li className={`p-2 rounded cursor-pointer ${
-                        active==="products"? "bg-gray-500":"hover:bg-blue-800"
-                     }`} onClick={()=>setActive("products")}>Products</li>
-                    <li className={`p-2 rounded cursor-pointer ${
-                        active==="categories"? "bg-gray-500":"hover:bg-blue-800"
-                     }`} onClick={()=>setActive("categories")}>Categories</li>
-                    <li className={`p-2 rounded cursor-pointer ${
-                        active==="stock"? "bg-gray-500":"hover:bg-blue-800"
-                     }`} onClick={()=>setActive("stock")}>Stock</li>
-                    <li className={`p-2 rounded cursor-pointer ${
-                        active==="reports"? "bg-gray-500":"hover:bg-blue-800"
-                     }`} onClick={()=>setActive("reports")}>Reports</li>
+export default function Admin() {
+    const [user, setUser] = useState(null);
+    const [active, setActive] = useState("dashboard"); // Default to dashboard
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    if (!user) {
+        return <h2 className="p-8 text-center">Please login first</h2>;
+    }
+
+    const renderContent = () => {
+        switch (active) {
+            case "dashboard":
+                return <DashboardHome />;
+            case "products":
+                return <Products />;
+            case "stockIn":
+                return <StockIn />;
+            case "stockOut":
+                return <StockOut />;
+            case "reports":
+                return <Reports />;
+            case "sales":
+                return <Sales />;
+            default:
+                return <DashboardHome />;
+        }
+    };
+
+    return (
+        <div className="flex min-h-screen">
+            {/* Sidebar */}
+            <div className="w-64 bg-gray-800 text-white p-4 flex flex-col">
+                <div className="bg-white rounded p-2 mb-6">
+                    <h2 className="font-bold text-xl text-blue-800">Nick Spares</h2>
+                </div>
+                <ul className="space-y-2 flex-1">
+                    <li 
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                            active === "dashboard" ? "bg-blue-600 text-white" : "hover:bg-blue-700"
+                        }`}
+                        onClick={() => setActive("dashboard")}
+                    >
+                        📊 Dashboard
+                    </li>
+                    <li 
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                            active === "products" ? "bg-blue-600 text-white" : "hover:bg-blue-700"
+                        }`}
+                        onClick={() => setActive("products")}
+                    >
+                        📦 Products
+                    </li>
+                    <li 
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                            active === "stockIn" ? "bg-blue-600 text-white" : "hover:bg-blue-700"
+                        }`}
+                        onClick={() => setActive("stockIn")}
+                    >
+                        ➕ Stock In
+                    </li>
+                    <li 
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                            active === "stockOut" ? "bg-blue-600 text-white" : "hover:bg-blue-700"
+                        }`}
+                        onClick={() => setActive("stockOut")}
+                    >
+                        ➖ Stock Out
+                    </li>
+                    <li 
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                            active === "reports" ? "bg-blue-600 text-white" : "hover:bg-blue-700"
+                        }`}
+                        onClick={() => setActive("reports")}
+                    >
+                        📈 Reports
+                    </li>
+                    <li 
+                        className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                            active === "sales" ? "bg-blue-600 text-white" : "hover:bg-blue-700"
+                        }`}
+                        onClick={() => setActive("sales")}
+                    >
+                        💰 Sales
+                    </li>
                 </ul>
             </div>
-            {active ==="dashboard" && <DashboardHome/>}
-            {active ==="product" && <Products/>}
-            {active ==="Stock" && <Stock/>}
-            {active ==="Categories" && <Categories/>}
-            {active ==="Report" && <Reports/>}
+
+            {/* Main Content */}
+            <div className="flex-1 p-6 bg-gray-50">
+                {renderContent()}
+            </div>
         </div>
-    )
+    );
 }

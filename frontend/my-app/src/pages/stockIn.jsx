@@ -1,4 +1,4 @@
-export default function Categories() {
+export default function StockIn() {
     return(
         <div>
             <h2>Categories page</h2>

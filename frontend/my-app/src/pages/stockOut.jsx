@@ -1,4 +1,4 @@
-export default function Stock() {
+export default function StockOut() {
     return(
         <div>
             <h2>Categories page</h2>

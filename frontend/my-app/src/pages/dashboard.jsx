@@ -15,10 +15,10 @@ export default function DashboardHome() {
         {/* Categories */}
         <div className="bg-green-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-semibold">Categories</h3>
+            <h3 className="text-lg font-semibold">Todays Sale</h3>
             <p className="mt-2 text-3xl font-bold">12</p>
           </div>
-          <div className="text-sm opacity-75 mt-2">Different product categories</div>
+          <div className="text-sm opacity-75 mt-2">Today's sale for in nick spare parts</div>
         </div>
 
         {/* Low Stock */}
@@ -33,10 +33,10 @@ export default function DashboardHome() {
         {/* Registered Users */}
         <div className="bg-purple-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-semibold">Registered Users</h3>
+            <h3 className="text-lg font-semibold">stockOut</h3>
             <p className="mt-2 text-3xl font-bold">2</p>
           </div>
-          <div className="text-sm opacity-75 mt-2">Total customers registered</div>
+          <div className="text-sm opacity-75 mt-2">Total product sold</div>
         </div>
 
       </div>
