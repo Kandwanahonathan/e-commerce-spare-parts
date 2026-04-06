@@ -2,6 +2,7 @@ import React,{useState} from "react";
 
 import axios from 'axios'
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function Register() {
     const [name, setName]=useState("")
@@ -14,12 +15,21 @@ export function Register() {
 
         try {
             const res= await axios.post("http://localhost:5000/user/register",{name,email,password})
-            alert("data inserted successfully")
+            toast.success("Your registered",{
+                position:"top-right",
+                autoClose:2000
+            })
             setName("")
             setEmail("")
             setPassword("")
+            navigate('/')
         } catch (err) {
-            alert("not inserted")
+            toast.error("failed to register",
+                {
+                    position:"top-right",
+                    autoClose:2000
+                }
+            )
         }
     }
    

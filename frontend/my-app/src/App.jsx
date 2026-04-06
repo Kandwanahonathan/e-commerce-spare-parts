@@ -5,32 +5,35 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import Login from './pages/login'
 import { Register } from './pages/register'
-import { BrowserRouter as Router, Routes,Route } from 'react-router-dom'
+import { Routes,Route } from 'react-router-dom'
 import Customer from './pages/customer-dash'
 import Admin from './pages/admin-dash'
 import ProtectedRouter from './pages/protectedRoute'
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
  
 
   return (
     <>
-      <Router>
+      
         <Routes>
           <Route path="/" element={<Login/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
 
-          <Route path="/admin-dash" element={<ProtectedRouter role={Admin}>
-          
-           <Admin/>
-          </ProtectedRouter>}/>
-          <Route path="/customer-dash" element={<ProtectedRouter role={Customer}>
+          <Route path="/customer-dash" element={<ProtectedRouter role="customer">
           
            <Customer/>
           </ProtectedRouter>}/>
+          <Route path="/admin-dash" element={<ProtectedRouter role="admin">
+          
+           <Admin/>
+          </ProtectedRouter>}/>
+          
         </Routes>
-      </Router>
+        <ToastContainer/>
     </>
   )
 }

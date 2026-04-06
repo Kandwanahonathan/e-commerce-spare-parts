@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
+import { useNavigate,Link} from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -13,19 +14,31 @@ export default function Login() {
       const res = await axios.post("http://localhost:5000/user/login", { email, password });
 
       const user = res.data.user;
-      alert(res.data.message);
+      // notify use toastify
+
+      toast.success(`Welcome ${user.name}!`,{
+        position:"top-right",
+        autoClose:2000
+      })
 
       // Save user to localStorage
       localStorage.setItem("user", JSON.stringify(user));
-
+      
       // Redirect based on role
-      if (user.role === "Admin") {
+      setTimeout(()=>{
+        const role=user.role.toLowerCase();
+      if (role === "admin") {
         navigate("/admin-dash");
       } else {
         navigate("/customer-dash");
       }
+      },500)
     } catch (error) {
-      alert("Invalid email or password");
+      toast.error("invalid email and name",{
+        position:"top-right",
+        autoClose:200
+        
+      });
     }
   };
 
@@ -64,12 +77,12 @@ export default function Login() {
           Login
         </button>
 
-        {/* <p className="mt-4 text-center">
+        <p className="mt-4 text-center">
           Don't have an account?{" "}
           <Link to="/register" className="text-blue-600 font-bold hover:underline">
             Register here
           </Link>
-        </p> */}
+        </p>
       </form>
     </div>
   );
